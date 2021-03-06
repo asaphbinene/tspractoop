@@ -25,6 +25,9 @@ var Department = /** @class */ (function () {
         this.id = id;
     }
     //List of tdefined and declared method 
+    Department.createEmployee = function (n) {
+        return { name: n, d: new Date() };
+    };
     Department.prototype.describe = function () {
         console.log("Department: (" + this.id + "): " + this.name);
     };
@@ -60,6 +63,23 @@ var AccountingDepartment = /** @class */ (function (_super) {
         _this.lastReport = reports[0];
         return _this;
     }
+    Object.defineProperty(AccountingDepartment.prototype, "mostRecentReport", {
+        //most secure way initializing properties
+        get: function () {
+            if (this.lastReport) {
+                return this.lastReport;
+            }
+            return 'no report reccorded';
+        },
+        set: function (value) {
+            if (!value) {
+                throw new Error("Please a value for this value is mandataory");
+            }
+            this.addReport(value);
+        },
+        enumerable: false,
+        configurable: true
+    });
     AccountingDepartment.prototype.addEmployee = function (name) {
         if (name === 'Asaph') {
             return;
@@ -75,16 +95,20 @@ var AccountingDepartment = /** @class */ (function (_super) {
     };
     return AccountingDepartment;
 }(Department));
+var employee1 = Department.createEmployee("Jedidah");
 var accounting = new Department('D1', 'Accounting');
 var mydepartment = new AccountingDepartment('D2', []);
 var allDepartment = new ITDepartment('D0', []);
 accounting.addEmployee("Asaph");
 accounting.addEmployee("Mado Binene");
+console.log(Department.createEmployee("Tirzah"));
 console.log(accounting);
 accounting.describe();
 accounting.printEmployeeInfo();
 mydepartment.addEmployee("Asaph");
 mydepartment.addEmployee('Mado');
+mydepartment.mostRecentReport = 'Yeah I add you';
 mydepartment.addReport('From the last test there something to be monitor');
+console.log(mydepartment.mostRecentReport);
 mydepartment.printReports();
 mydepartment.printEmployeeInfo();

@@ -14,6 +14,9 @@ class Department {
     }
 
     //List of tdefined and declared method 
+    static createEmployee(n: string){
+        return { name: n, d : new Date()}
+    }
     describe( this: Department ) {
         console.log(`Department: (${this.id}): ${this.name}`);
     }
@@ -41,6 +44,21 @@ class ITDepartment extends Department {
 
 class AccountingDepartment extends Department{
     private lastReport: string;
+
+    //most secure way initializing properties
+    get mostRecentReport() {
+        if(this.lastReport){
+            return this.lastReport;
+        }
+        return 'no report reccorded';
+    }
+
+    set mostRecentReport(value : string){
+        if(!value){
+            throw new Error("Please a value for this value is mandataory")
+        }
+        this.addReport(value)
+    }
     /**
      *
      */
@@ -67,6 +85,8 @@ class AccountingDepartment extends Department{
     }
 }
 
+const employee1 = Department.createEmployee("Jedidah")
+
 const accounting = new Department('D1', 'Accounting');
 
 const mydepartment = new AccountingDepartment('D2', []);
@@ -76,6 +96,7 @@ const allDepartment = new ITDepartment('D0', [])
 
 accounting.addEmployee("Asaph");
 accounting.addEmployee("Mado Binene");
+console.log(Department.createEmployee("Tirzah"))
 
 console.log(accounting);
 accounting.describe();
@@ -85,6 +106,8 @@ accounting.printEmployeeInfo()
 mydepartment.addEmployee("Asaph");
 mydepartment.addEmployee('Mado');
 
+mydepartment.mostRecentReport = 'Yeah I add you';
 mydepartment.addReport('From the last test there something to be monitor');
+console.log(mydepartment.mostRecentReport);
 mydepartment.printReports();
 mydepartment.printEmployeeInfo();
