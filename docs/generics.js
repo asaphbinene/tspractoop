@@ -1,24 +1,19 @@
 "use strict";
-var __spreadArray = (this && this.__spreadArray) || function (to, from) {
-    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-        to[j] = from[i];
-    return to;
-};
-var names = [];
-var promise = new Promise(function (resolve, reject) {
-    setTimeout(function () {
+const names = [];
+const promise = new Promise((resolve, reject) => {
+    setTimeout(() => {
         resolve("at done");
     }, 2000);
 });
-promise.then(function (data) {
+promise.then(data => {
     data.split('');
 });
 function merge(objA, objB) {
     return Object.assign(objA, objB);
 }
-var mergeObj = merge({ name: 'Max' }, { age: 30 });
+const mergeObj = merge({ name: 'Max' }, { age: 30 });
 function countAndDescribe(element) {
-    var descriptionText = 'Go no value';
+    let descriptionText = 'Go no value';
     if (element.length === 1) {
         descriptionText = 'Got 1 element.';
     }
@@ -31,29 +26,28 @@ function extractAndConvert(obj, key) {
     return 'Value: ' + obj[key];
 }
 extractAndConvert({ name: 'Max' }, 'name');
-var DataStorage = /** @class */ (function () {
-    function DataStorage() {
+class DataStorage {
+    constructor() {
         this.data = [];
     }
-    DataStorage.prototype.addItem = function (item) {
+    addItem(item) {
         this.data.push(item);
-    };
-    DataStorage.prototype.removeItem = function (item) {
+    }
+    removeItem(item) {
         this.data.splice(this.data.indexOf(item), 1);
-    };
-    DataStorage.prototype.getItems = function () {
-        return __spreadArray([], this.data);
-    };
-    return DataStorage;
-}());
-var textStorage = new DataStorage();
+    }
+    getItems() {
+        return [...this.data];
+    }
+}
+const textStorage = new DataStorage();
 textStorage.addItem('Asaph');
 textStorage.addItem('Binene');
 textStorage.addItem('Mado');
 textStorage.removeItem('Binene');
 console.log(textStorage.getItems());
 function createCourseGoal(title, description, date) {
-    var courseGoal = {};
+    let courseGoal = {};
     courseGoal.title = title;
     courseGoal.description = description;
     courseGoal.completeUntil = date;
